@@ -4,7 +4,7 @@
     <div class="search-city">
       <input
         class="city-name"
-        @keyup="submit()"
+        @keyup="submit($event)"
         type="text"
         placeholder="Enter a city name"
       />
@@ -25,7 +25,11 @@
       </div>
       <transition>
         <ul v-show="isClicked" class="list">
-          <li @click="changeCountry" v-for="(country, i) in countries" :key="i">
+          <li
+            @click="changeCountry($event)"
+            v-for="(country, i) in countries"
+            :key="i"
+          >
             <p>{{ country.name }}-{{ country.code }}</p>
           </li>
         </ul>
@@ -136,9 +140,10 @@ export default {
     };
   },
   methods: {
-    async submit() {
-      if (event.keyCode == 13) {
-        this.$store.dispatch("setCityName", event.target.value);
+    async submit(e) {
+      console.log(e);
+      if (e.keyCode == 13) {
+        this.$store.dispatch("setCityName", e.target.value);
 
         try {
           let result = await this.$store.dispatch("getWeather");
@@ -151,12 +156,9 @@ export default {
         }
       }
     },
-    changeCountry() {
-      this.selected = event.target.childNodes[0].innerText;
-      this.$store.dispatch(
-        "setCountryName",
-        event.target.childNodes[0].innerText
-      );
+    changeCountry(e) {
+      this.selected = e.target.childNodes[0].innerText;
+      this.$store.dispatch("setCountryName", e.target.childNodes[0].innerText);
       this.isClicked = !this.isClicked;
     },
     showList() {
@@ -175,17 +177,17 @@ export default {
       return this.$store.getters.getCountries;
     },
   },
- async created(){
+  async created() {
     try {
-          let result = await this.$store.dispatch("getWeather");
-        } catch (error) {
-          this.showAlert = true;
-          setTimeout((params) => {
-            this.showAlert = false;
-          }, 3000),
-            0; //What is this , ı am not sure :)
-        }
-  }
+      let result = await this.$store.dispatch("getWeather");
+    } catch (error) {
+      this.showAlert = true;
+      setTimeout((params) => {
+        this.showAlert = false;
+      }, 3000),
+        0; //What is this , ı am not sure :)
+    }
+  },
 };
 </script>
 
@@ -199,10 +201,10 @@ export default {
 }
 
 .v-enter-active {
-  animation: easy-ın .1s;
+  animation: easy-ın 0.1s;
 }
 .v-leave-active {
-  animation: easy-ın .1s reverse;
+  animation: easy-ın 0.1s reverse;
 }
 
 @keyframes easy-ın {
@@ -216,9 +218,9 @@ export default {
     opacity: 1;
   }
 }
-.title{
+.title {
   position: absolute;
-  top:1rem;
+  top: 1rem;
   color: white;
   font-size: 30px;
 }
@@ -308,7 +310,7 @@ export default {
   overflow: scroll;
   overflow-x: hidden;
   display: block;
-  transform-origin:top right ;
+  transform-origin: top right;
 }
 .list::-webkit-scrollbar {
   background-color: inherit;
