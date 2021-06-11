@@ -1,6 +1,7 @@
 export const state = () => ({
   apiKey: "39682d231f24ff5162950ef2afe6f225",
   cityName: "" || "istanbul",
+  proxy: "https://cors-anywhere.herokuapp.com/",
   country: "" || "TR",
   countries: [
     { name: "Afghanistan", code: "AF" },
@@ -286,7 +287,7 @@ export const getters = {
 export const actions = {
   async nuxtServerInit({ state, commit }) {
     let response = await this.$axios.get(
-      `http://api.openweathermap.org/data/2.5/weather?q=istanbul,TR&APPID=${state.apiKey}`
+      `${state.proxy}http://api.openweathermap.org/data/2.5/weather?q=istanbul,TR&APPID=${state.apiKey}`
     );
     console.log(response);
     let name = response.data.name;
@@ -340,7 +341,7 @@ export const actions = {
 
   async getWeather(VuexContext) {
     let response = await this.$axios.get(
-      `http://api.openweathermap.org/data/2.5/weather?q=${VuexContext.state.cityName},${VuexContext.state.country}&APPID=${VuexContext.state.apiKey}`
+      `${VuexContext.state.proxy}http://api.openweathermap.org/data/2.5/weather?q=${VuexContext.state.cityName},${VuexContext.state.country}&APPID=${VuexContext.state.apiKey}`
     );
     console.log(response);
     let name = response.data.name;

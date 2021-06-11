@@ -3,6 +3,7 @@
     <h2 class="title">Weather App</h2>
     <div class="search-city">
       <input
+      style="width:70%"
         class="city-name"
         @keyup="submit($event)"
         type="text"
@@ -225,7 +226,8 @@ export default {
   font-size: 30px;
 }
 #app {
-  height: 100vh;
+  width:100%;
+  min-height: 100vh;
   background: rgb(2, 0, 36);
   background: linear-gradient(
     90deg,
@@ -255,7 +257,7 @@ export default {
 .search-city {
   height: 5rem;
   display: flex;
-  width: 40rem;
+  width: 70%;
   justify-content: center;
   background-color: inherit;
   border-bottom: 2px solid white;
@@ -268,7 +270,7 @@ export default {
   width: 40rem;
   outline: none;
   margin: auto;
-  font-size: 3.5rem;
+  font-size: 1.3rem;
   background-color: inherit;
   border: none;
   color: white;
@@ -370,7 +372,7 @@ export default {
 
 .info {
   height: 20rem;
-  width: 30rem;
+  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
